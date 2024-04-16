@@ -610,7 +610,7 @@ logic about those arguments::
 
 The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`,
 :doc:`complex expressions </service_container/expression_language>` and even
-:ref:`environment variables <config-env-vars>`::
+:ref:`environment variables <config-env-vars>`::, :doc:`including env variable processors </configuration/env_var_processors>`
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -631,11 +631,16 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
 
             // expressions
             #[Autowire(expression: 'service("App\\\Mail\\\MailerConfiguration").getMailerMethod()')]
-            string $mailerMethod
+            string $mailerMethod,
 
             // environment variables
             #[Autowire(env: 'SOME_ENV_VAR')]
-            string $senderName
+            string $senderName,
+
+            // environment variables with processors
+            #[Autowire(env: 'bool:SOME_BOOL_ENV_VAR')]
+            string $allowAttachments,
+        
         ) {
         }
         // ...
